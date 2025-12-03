@@ -1,5 +1,8 @@
 <img src="https://docencia.xaviersastre.cat/imatges/logosxs/logo_xaviersastre_v3_1.webp" alt="drawing" width="50%"/>
 
+![Creat amb Markdown](https://img.shields.io/badge/Creat%20amb-Markdown-green)<img src="https://upload.wikimedia.org/wikipedia/commons/4/41/1280px_Markdown_with_White_Background.png" alt="Logo Markdown" height="20" />
+![a GitHub](https://img.shields.io/badge/a-GitHub-blue)<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Logo Github" height="20" />
+[![per en](https://img.shields.io/badge/per%20en-xsastre-red)](https://github.com/xsastre)
 
 # Exercici: Pizza Maker Interactiu
 
