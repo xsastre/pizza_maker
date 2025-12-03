@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Pizza Maker 3000</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    .category-box { border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 10px; }
+    .price-tag { font-weight: bold; color: green; }
+    .sticky-footer { position: relative;margin-top:20px; bottom: 0; width: 100%; background: #333; color: white; padding: 15px; text-align: center; }
+  </style>
+</head>
+<body class="container py-5 mb-5">
+
+<h1 class="text-center mb-4">🍕 Pizza Maker Interactiu</h1>
+
+<form action="/create" method="post" id="pizzaForm">
+
+  <div class="row">
+    <!-- Iterem sobre el mapa de categories -->
+    <div class="col-md-6" th:each="entry : ${categories}">
+      <div class="category-box">
+        <h3 th:text="${entry.key}">Categoria</h3>
+
+        <div class="form-check" th:each="ing : ${entry.value}">
+          <input class="form-check-input ingredient-check"
+                 type="checkbox"
+                 name="ingredientsSeleccionats"
+                 th:value="${ing.nom}"
+                 th:data-price="${ing.preu}"
+                 th:id="${'check-' + ing.nom}">
+          <label class="form-check-label" th:for="${'check-' + ing.nom}">
+            <span th:text="${ing.emoji}"></span>
+            <span th:text="${ing.nom}">Nom</span>
+            <span class="badge bg-secondary" th:text="${ing.preu} + '€'"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="/history" class="btn btn-outline-info">Veure Historial</a>
+  </div>
+
+  <!-- Barra inferior fixa amb el càlcul interactiu -->
+  <div class="sticky-footer">
+    <h3>Preu estimat: <span id="totalPrice">0.00</span>€</h3>
+    <button type="submit" class="btn btn-warning btn-lg">🔥 Cuinar Pizza</button>
+  </div>
+
+</form>
+
+<script>
+  // Script simple per fer-ho interactiu (calculadora client-side)
+  const checkboxes = document.querySelectorAll('.ingredient-check');
+  const totalDisplay = document.getElementById('totalPrice');
+
+  function updateTotal() {
+    let total = 0;
+    checkboxes.forEach(box => {
+      if (box.checked) {
+        total += parseFloat(box.getAttribute('data-price'));
+      }
+    });
+    // Lògica visual de descompte (només orientativa, el servidor mana)
+    if(total > 12) {
+      total = total * 0.9;
+      totalDisplay.style.color = "yellow";
+      totalDisplay.innerHTML = total.toFixed(2) + " (Descompte aplicat!)";
+    } else {
+      totalDisplay.style.color = "white";
+      totalDisplay.innerText = total.toFixed(2);
+    }
+  }
+
+  checkboxes.forEach(box => box.addEventListener('change', updateTotal));
+</script>
+</body>
+</html>
